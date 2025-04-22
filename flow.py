@@ -1,4 +1,5 @@
 from pocketflow import Flow
+
 # Import all node classes from nodes.py
 from nodes import (
     FetchRepo,
@@ -6,8 +7,9 @@ from nodes import (
     AnalyzeRelationships,
     OrderChapters,
     WriteChapters,
-    CombineTutorial
+    CombineTutorial,
 )
+
 
 def create_tutorial_flow():
     """Creates and returns the codebase tutorial generation flow."""

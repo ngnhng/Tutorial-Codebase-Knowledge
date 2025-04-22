@@ -2,7 +2,7 @@
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-> *Ever stared at a new codebase written by others feeling completely lost? This tutorial shows you how to build an AI agent that analyzes GitHub repositories and creates beginner-friendly tutorials explaining exactly how the code works.*
+> _Ever stared at a new codebase written by others feeling completely lost? This tutorial shows you how to build an AI agent that analyzes GitHub repositories and creates beginner-friendly tutorials explaining exactly how the code works._
 
 <p align="center">
   <img
@@ -16,7 +16,7 @@ This is a tutorial project of [Pocket Flow](https://github.com/The-Pocket/Pocket
 
 - Check out the [Substack Post Tutorial](https://zacharyhuang.substack.com/p/ai-codebase-knowledge-builder-full) for more!
 
-&nbsp;&nbsp;**🔸 🎉 Reached Hacker News Front Page** (April 2025) with >800 up‑votes:  [Discussion »](https://news.ycombinator.com/item?id=43739456)
+&nbsp;&nbsp;**🔸 🎉 Reached Hacker News Front Page** (April 2025) with >800 up‑votes: [Discussion »](https://news.ycombinator.com/item?id=43739456)
 
 ## ⭐ Example Results for Popular GitHub Repositories!
 
@@ -66,49 +66,76 @@ This is a tutorial project of [Pocket Flow](https://github.com/The-Pocket/Pocket
 
 - [SmolaAgents](https://the-pocket.github.io/Tutorial-Codebase-Knowledge/SmolaAgents) - Build tiny AI agents that punch way above their weight class!
 
-
 ## 🚀 Getting Started
 
 1. Clone this repository
 
 2. Install dependencies:
+
    ```bash
    pip install -r requirements.txt
    ```
 
-3. Set up LLM in [`utils/call_llm.py`](./utils/call_llm.py) by providing credentials. By default, you can use the AI Studio key with this client for Gemini Pro 2.5:
+3. Set the LLM_PROVIDER environment variable:
 
-   ```python
-   client = genai.Client(
-     api_key=os.getenv("GEMINI_API_KEY", "your-api_key"),
-   )
+   ```bash
+     # For OpenAI
+     export LLM_PROVIDER=openai
+
+     # For Google Gemini
+     export LLM_PROVIDER=gemini
+
+     # For Google Vertex AI
+     export LLM_PROVIDER=vertex
+
+     # For Anthropic Claude
+     export LLM_PROVIDER=claude
    ```
 
-   You can use your own models. We highly recommend the latest models with thinking capabilities (Claude 3.7 with thinking, O1). You can verify that it is correctly set up by running:
+4. Set up the API key in your environment:
+
+   ```bash
+    # For OpenAI
+    export OPENAI_API_KEY=your_api_key
+    export OPENAI_MODEL=gpt-4.1-mini
+    # For Google Gemini
+
+    export GEMINI_API_KEY=your_api_key
+    export GEMINI_MODEL=gemini-2.5-pro-exp-03-25
+
+    # For Anthropic Claude
+
+    export ANTHROPIC_API_KEY=your_api_key
+    export ANTHROPIC_MODEL=claude-3-7-sonnet-20250219
+   ```
+
+5. You can use your own models. We highly recommend the latest models with thinking capabilities (Claude 3.7 with thinking, O1). You can verify that it is correctly set up by running:
+
    ```bash
    python utils/call_llm.py
    ```
 
-4. Generate a complete codebase tutorial by running the main script:
-    ```bash
-    # Analyze a GitHub repository
-    python main.py --repo https://github.com/username/repo --include "*.py" "*.js" --exclude "tests/*" --max-size 50000
+6. Generate a complete codebase tutorial by running the main script:
 
-    # Or, analyze a local directory
-    python main.py --dir /path/to/your/codebase --include "*.py" --exclude "*test*"
+   ```bash
+   # Analyze a GitHub repository
+   python main.py --repo https://github.com/username/repo --include "*.py" "*.js" --exclude "tests/*" --max-size 50000
 
-    # Or, generate a tutorial in Chinese
-    python main.py --repo https://github.com/username/repo --language "Chinese"
-    ```
+   # Or, analyze a local directory
+   python main.py --dir /path/to/your/codebase --include "*.py" --exclude "*test*"
 
-    - `--repo` or `--dir` - Specify either a GitHub repo URL or a local directory path (required, mutually exclusive)
-    - `-n, --name` - Project name (optional, derived from URL/directory if omitted)
-    - `-t, --token` - GitHub token (or set GITHUB_TOKEN environment variable)
-    - `-o, --output` - Output directory (default: ./output)
-    - `-i, --include` - Files to include (e.g., "*.py" "*.js")
-    - `-e, --exclude` - Files to exclude (e.g., "tests/*" "docs/*")
-    - `-s, --max-size` - Maximum file size in bytes (default: 100KB)
-    - `--language` - Language for the generated tutorial (default: "english")
+   # Or, generate a tutorial in Chinese
+   python main.py --repo https://github.com/username/repo --language "Chinese"
+   ```
+
+   - `--repo` or `--dir` - Specify either a GitHub repo URL or a local directory path (required, mutually exclusive)
+   - `-n, --name` - Project name (optional, derived from URL/directory if omitted)
+   - `-t, --token` - GitHub token (or set GITHUB_TOKEN environment variable)
+   - `-o, --output` - Output directory (default: ./output)
+   - `-i, --include` - Files to include (e.g., "_.py" "_.js")
+   - `-e, --exclude` - Files to exclude (e.g., "tests/_" "docs/_")
+   - `-s, --max-size` - Maximum file size in bytes (default: 100KB)
+   - `--language` - Language for the generated tutorial (default: "english")
 
 The application will crawl the repository, analyze the codebase structure, generate tutorial content in the specified language, and save the output in the specified directory (default: ./output).
 
